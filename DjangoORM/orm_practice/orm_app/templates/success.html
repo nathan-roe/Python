@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome {{user.first_name}} {{user.last_name}}</h1>
+    <h2>Your email is {{user.email}}</h2>
+    <div class="pet_tables">
+        <h2>Your pets: </h2>
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Age</th>
+            </thead>
+            <tbody>
+                {%for pet in user.pets.all%}
+                <tr>
+                    <td>{{pet.name}}</td>
+                    <td>{{pet.age}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        <h2>All pets: </h2>
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Age</th>
+                <th>User</th>
+            </thead>
+            <tbody>
+                {%for user in all_users.all%}
+                    {%for pet in user.pets.all%}
+                        <tr>
+                            <td>{{pet.name}}</td>
+                            <td>{{pet.age}}</td>
+                            <td>{{user.first_name}} {{user.last_name}}</td>
+                        </tr>
+                    {%endfor%}
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <h3>Add a Pet!</h3>
+    <form action="/pet/add" method="post">
+        {%csrf_token%}
+        <label for="name">Name: </label>
+        <input type="text" name="name">
+
+        <label for="age">Age: </label>
+        <input type="text" name="age">
+
+        <input type="submit" value="Add Pet">
+    </form>
+</body>
+</html>

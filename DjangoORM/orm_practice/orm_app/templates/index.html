@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" style="display: flex; justify-content: space-evenly;">
+        <div class="left">
+            <h1>Register</h1>
+            <form action="/register" method="post" style="display: flex; flex-direction: column;">
+                {%csrf_token%}
+                <label for="first_name">First Name: </label>
+                <input type="text" name="first_name">
+    
+                <label for="last_name">Last Name: </label>
+                <input type="text" name="last_name">
+    
+                <label for="email">Email: </label>
+                <input type="text" name="email">
+    
+                <label for="password">Password: </label>
+                <input type="text" name="password">
+    
+                <label for="confirm">Confirm: </label>
+                <input type="text" name="confirm">
+
+                <input type="submit">
+            </form>
+        </div>
+        {% if messages %}
+        <ul class="messages">    
+            {% for message in messages %}    
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="right">
+            <h1>Login</h1>
+            <form action="/login" method="post" style="display: flex; flex-direction: column;">
+                {%csrf_token%}
+                <label for="email">Email: </label>
+                <input type="text" name="email">
+    
+                <label for="password">Password: </label>
+                <input type="text" name="password">
+
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

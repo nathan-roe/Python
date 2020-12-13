@@ -21,8 +21,8 @@ class DLList:
             self.Tail = newNode
     def display(self):
         runner = self.Head
-        while runner != None:
-            print(runner.Value)
+        while runner.Prev != None:
+            print(runner.Prev.Value)
             runner = runner.Next
         print("____________")
     def get(self, val):
@@ -33,7 +33,8 @@ class DLList:
             runner = runner.Next
         return -1
     def reverse(self):
-        runner = self.Tail
+        runner = self.Tail.Value
+        print(self.Tail)
         while runner != None:
             print(runner.Value)
             runner = runner.Prev
