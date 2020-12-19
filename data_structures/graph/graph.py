@@ -8,6 +8,26 @@ class Node:
     def printConnections(self):
         for c in self.connections:
             print(f"{c.first_name} {c.last_name}")
+    def getConnection(self, con_first=None, con_last=None):
+        con_list = []
+        if con_first == None and con_last == None:
+            return "Not Valid"
+        for c in self.connections:
+            if con_first == None and con_last != None:
+                if c.last_name == con_last:
+                    print(f"{c.first_name} {c.last_name}")
+                    con_list.append(c)
+            elif con_last == None and con_first != None:
+                if c.first_name == con_first:
+                    print(f"{c.first_name} {c.last_name}")
+                    con_list.append(c)
+            else:
+                if c.first_name == con_first and c.last_name == con_last:
+                    print(f"{c.first_name} {c.last_name}")
+                    con_list.append(c)
+        print("____________________")
+        return con_list
+
 
 class Graph:
     def __init__ (self):
@@ -46,13 +66,17 @@ con_node = g.getNode("logan", "bob")
 c1 = g.getNode("nateasdf", "boasdfb")
 c2 = g.getNode("natfdasde", "bobdfdsa")
 c3 = g.getNode("natfdasdfasde", "boasdfbdfdsa")
+c3_first_mimic = g.getNode("natfdasdfasde", "boasdfbdfdsaasdfasd")
 c4 = g.getNode("natfdaasdfsdfasde", "boasdfbdasdffdsa")
 # this_node.addConnection(con_node)
 con_node.addConnection(c1)
 this_node.addConnection(c1)
 c1.addConnection(c2)
 c2.addConnection(c3)
+c2.addConnection(c3_first_mimic)
 c3.addConnection(c4)
 c4.addConnection(con_node)
 this_node.printConnections()
 print(g.findConnectionSpace(this_node, con_node))
+c2.getConnection("natfdasdfasde", "boasdfbdfdsa")
+# c2.getConnection("natfdasdfasde")
