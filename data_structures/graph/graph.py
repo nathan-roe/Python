@@ -25,6 +25,7 @@ class Node:
                 if c.first_name == con_first and c.last_name == con_last:
                     print(f"{c.first_name} {c.last_name}")
                     con_list.append(c)
+            print(c)
         print("____________________")
         return con_list
 
@@ -78,5 +79,8 @@ c3.addConnection(c4)
 c4.addConnection(con_node)
 this_node.printConnections()
 print(g.findConnectionSpace(this_node, con_node))
-c2.getConnection("natfdasdfasde", "boasdfbdfdsa")
-# c2.getConnection("natfdasdfasde")
+# c2.getConnection("natfdasdfasde", "boasdfbdfdsa")
+unk_node = this_node.getConnection(c1.first_name)
+print("__________")
+print(unk_node[0].first_name)
+print("__________")
