@@ -28,7 +28,10 @@ class Node:
             print(c)
         print("____________________")
         return con_list
-
+    def removeConnection(self, node):
+        ret = node
+        self.connections.remove(node)
+        return ret
 
 class Graph:
     def __init__ (self):
@@ -84,3 +87,9 @@ unk_node = this_node.getConnection(c1.first_name)
 print("__________")
 print(unk_node[0].first_name)
 print("__________")
+c3.printConnections()
+print("!")
+print(c3.removeConnection(c4).first_name)
+print("!")
+c3.printConnections()
+
