@@ -2,6 +2,13 @@ from django.db import models
 
 # Create your models here.
 class PersonManager(models.Manager):
+    pass
+class Person(models.Model):
+    first_name = models.CharField(max_length=45)
+    last_name = models.CharField(max_length=45)
+    connections = models.ForeignKey('self', related_name="connection", on_delete=models.CASCADE, default=None, blank=True, null=True)
+    objects = PersonManager()
+
     def findConnectionSpace(self, user, potCon, count = 0):
         if count == 3:
             return count
@@ -10,17 +17,6 @@ class PersonManager(models.Manager):
         else:
             for u in user.connections:
                 return self.findConnectionSpace(u, potCon, count+1)
-class Person(models.Model):
-    first_name = models.CharField(max_length=45)
-    last_name = models.CharField(max_length=45)
-    connections = models.ForeignKey('self', related_name="connection", on_delete=models.CASCADE)
-    objects = PersonManager()
-
-    def addConnection(self, node):
-        self.connection.add(node)
-    def printConnections(self):
-        for c in self.connection:
-            print(f"{c.first_name} {c.last_name}")
 
 
 
