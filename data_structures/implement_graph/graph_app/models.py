@@ -10,6 +10,12 @@ class Person(models.Model):
     objects = PersonManager()
 
     @staticmethod
+    def printConnections(user):
+        for u in user.connection.all():
+            print(f"{u.first_name} {u.last_name}")
+
+
+    @staticmethod
     def findConnectionSpace(user, potCon, count = 0):
         if count == 3:
             return count
