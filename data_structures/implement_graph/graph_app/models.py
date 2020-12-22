@@ -9,14 +9,15 @@ class Person(models.Model):
     connections = models.ForeignKey('self', related_name="connection", on_delete=models.CASCADE, default=None, blank=True, null=True)
     objects = PersonManager()
 
-    def findConnectionSpace(self, user, potCon, count = 0):
+    @staticmethod
+    def findConnectionSpace(user, potCon, count = 0):
         if count == 3:
             return count
-        if potCon in user.connections:
+        if potCon in user.connection.all():
             return count
         else:
-            for u in user.connections:
-                return self.findConnectionSpace(u, potCon, count+1)
+            for u in user.connection.all():
+                return Person.findConnectionSpace(u, potCon, count+1)
 
 
 
