@@ -3,11 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Class Based Forms</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <h1>Hello World</h1>
-    {%csrf_token%}
-    {{reg_form.as_p}}
+    <h1>Users</h1>
+        <table>
+            <thead>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </thead>
+            <tbody class="users">
+                {%for user in users%}
+                <tr>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.email}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    <form action="process" method="post">
+        {% csrf_token %}
+        {{reg_form.as_p}}
+        <input type="submit">
+    </form>
 </body>
+<script>
+    $('form').submit(e => {
+        console.log("Hello There!")
+        e.preventDefault();
+        $.ajax({
+            url: '/process',
+            method: 'post',
+            data: $(this).serialize(),
+            success: serverResponse => {
+                $('.users').html(serverResponse)
+            }
+        });
+        $(this).trigger('reset');
+    });
+    
+</script>
 </html>
