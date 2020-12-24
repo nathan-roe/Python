@@ -8,13 +8,14 @@
 </head>
 <body>
     <h1>Users</h1>
-        <table>
-            <thead>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-            </thead>
-            <tbody class="users">
+    <table>
+        <thead>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+        </thead>
+        <tbody>
+            <div class="users">
                 {%for user in users%}
                 <tr>
                     <td>{{user.first_name}}</td>
@@ -22,13 +23,21 @@
                     <td>{{user.email}}</td>
                 </tr>
                 {%endfor%}
-            </tbody>
-        </table>
+            </div>
+        </tbody>
+    </table>
     <form action="process" method="post">
         {% csrf_token %}
         {{reg_form.as_p}}
         <input type="submit">
     </form>
+    {%if form%}
+        {%for field in form%}
+            {%for error in field.errors%}
+                <p>{{error}}</p>
+            {%endfor%}
+        {%endfor%}
+    {%endif%}
 </body>
 <script>
     $('form').submit(e => {
@@ -37,9 +46,9 @@
         $.ajax({
             url: '/process',
             method: 'post',
-            data: $(this).serialize(),
+            data: {content: $(this).serialize(), csrfmiddlewaretoken: '{{ csrf_token }}'},
             success: serverResponse => {
-                $('.users').html(serverResponse)
+                $('users').html(serverResponse)
             }
         });
         $(this).trigger('reset');

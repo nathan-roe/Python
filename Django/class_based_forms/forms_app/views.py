@@ -11,6 +11,7 @@ def process(req):
     if req.method == "POST":
         showForm = rf(req.POST)
         if showForm.is_valid():
+            print("User being created")
             this_user = User.objects.create(
                 first_name=req.POST["first_name"],
                 last_name=req.POST["last_name"],
@@ -26,7 +27,12 @@ def process(req):
             return render(req, "index.html", context)
         else:
             print("Something went wrong")
-            return redirect("/")
+            for field in showForm:
+                for error in field.errors:
+                    print(error)
+            context = {"form":showForm}
+            return render(req, "index.html", context)
+    print("not post req")
 def success(req):
     this_user = User.objects.get(id=req.session["uuid"])
     context = {"user":this_user}
